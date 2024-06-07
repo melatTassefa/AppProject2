@@ -21,6 +21,7 @@ from django.http import HttpResponse
 from django import forms
 from django.http import JsonResponse
 import json
+from django.urls import reverse
 
 def contact(request):
     return render(request, 'contact.html')
@@ -257,24 +258,94 @@ def suggest_career(answers):
 
 ######################QUIZ3 SOCIAL
 
-def calculate_career(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        answers = data.get('answers')
-        # Calculate based on the answers
-        law_score = calculate_law_score(answers)
-        economics_score = calculate_economics_score(answers)
-        # Decide the career path
-        if law_score > economics_score:
-            result = "Law"
-        elif economics_score > law_score:
-            result = "Economics"
-        else:
-            result = "Either Law or Economics"
-        return JsonResponse({'result': result})
-    else:
-        return HttpResponse("Method not allowed", status=405)
+# def calculate_career(request):
+#     if request.method == 'POST':
+#         data = json.loads(request.body)
+#         answers = data.get('answers')
+#         # Calculate based on the answers
+#         law_score = calculate_law_score(answers)
+#         economics_score = calculate_economics_score(answers)
+#         # Decide the career path
+#         if law_score > economics_score:
+#             result = "Law"
+#         elif economics_score > law_score:
+#             result = "Economics"
+#         else:
+#             result = "Either Law or Economics"
+#         return JsonResponse({'result': result})
+#     else:
+#         return HttpResponse("Method not allowed", status=405)
 
+# quiz/views.py
+
+
+##################################################
+# Sample questions for demonstration purposes
+questions = [
+    {"id": 1, "text": "How confident are you in your ability to persuade others during discussions or debates?", "category": "Verbal Communication", "rank": 1},
+    {"id": 2, "text": "Do you actively participate in class discussions or group conversations?", "category": "Verbal Communication", "rank": 2},
+    {"id": 3, "text": "How well do you handle disagreements and maintain respectful communication during conflicts?", "category": "Verbal Communication", "rank": 3},
+    {"id": 4, "text": "Do you consistently follow rules and guidelines even when no one is watching?", "category": "Ethical Judgement", "rank": 1},
+    {"id": 5, "text": "How well do you handle sensitive or confidential information keeping it private and secure?", "category": "Ethical Judgement", "rank": 2},
+    {"id": 6, "text": "Do you often stand up for what you believe is right even if it is unpopular or risky?", "category": "Ethical Judgement", "rank": 3},
+    {"id": 7, "text": "Do you easily adapt to new or unexpected changes in your environment or schedule?", "category": "Resilience", "rank": 1},
+    {"id": 8, "text": "How often do you seek help or support from friends, family, or teachers when you are struggling?", "category": "Resilience", "rank": 2},
+    {"id": 9, "text": "How comfortable are you with solving mathematical problems and equations?", "category": "Quantitative Analysis", "rank": 1},
+    {"id": 10, "text": "How well do you understand and interpret data presented in charts, graphs, and tables?", "category": "Quantitative Analysis", "rank": 2},
+    {"id": 11, "text": "How effectively do you apply mathematical concepts to real-world problems?", "category": "Quantitative Analysis", "rank": 3},
+    {"id": 12, "text": "How well do you understand complex theoretical concepts in your studies?", "category": "Theoretical Thinking", "rank": 1},
+    {"id": 13, "text": "How effectively do you combine different ideas and theories to form a cohesive understanding of a subject?", "category": "Theoretical Thinking", "rank": 2},
+    {"id": 14, "text": "How effectively do you gather information from reliable sources for your assignments?", "category": "Patience for Research", "rank": 1},
+    {"id": 15, "text": "How well do you analyze and interpret the data you collected to draw meaningful conclusions?", "category": "Patience for Research", "rank": 2},
+    {"id": 16, "text": "Do you often collaborate effectively with others (such as classmates or teachers) on doing assignments?", "category": "Patience for Research", "rank": 3},
+    {"id": 17, "text": "How often do you critically evaluate the strengths and weaknesses of different arguments or theories?", "category": "Critical Evaluation", "rank": 1},
+    {"id": 18, "text": "How proficient are you at writing clear and logical analyses of topics when doing assignments?", "category": "Critical Evaluation", "rank": 2},
+    {"id": 19, "text": "How often do you question the assumptions underlying different viewpoints or arguments?", "category": "Critical Thinking", "rank": 1},
+    {"id": 20, "text": "How frequently do you consider multiple perspectives before forming an opinion?", "category": "Critical Thinking", "rank": 2},
+]
+
+# Page size
+questions_per_page = 5
+
+def quiz_view(request, page=1):
+    page = int(page)  # Ensure page is an integer
+    if request.method == 'POST':
+        # Retrieve the previous scores from the session
+        scores = request.session.get('scores', {})
+
+        # Update the scores based on the submitted answers
+        for question in questions[(page-1)*questions_per_page : page*questions_per_page]:
+            answer = int(request.POST.get(f"question{question['id']}"))
+            category = question['category']
+            scores[category] = scores.get(category, 0) + answer
+
+        # Save the updated scores in the session
+        request.session['scores'] = scores
+
+        # If it's the last page, redirect to the result page
+        if page == (len(questions) + questions_per_page - 1) // questions_per_page:
+            return redirect('quiz_results')
+        else:
+            return redirect(reverse('quiz', kwargs={'page': page + 1}))
+
+    # Fetch the current set of questions
+    current_questions = questions[(page-1)*questions_per_page : page*questions_per_page]
+
+    return render(request, 'quiz4.html', {'questions': current_questions, 'page': page})
+
+def quiz_results(request):
+    scores = request.session.get('scores', {})
+    categories = ["Verbal Communication", "Ethical Judgement", "Resilience"]
+    law_score = sum(scores.get(cat, 0) for cat in categories)
+    economics_score = sum(scores.get(cat, 0) for cat in ["Quantitative Analysis", "Theoretical Thinking", "Patience for Research"])
+
+    recommendation = "Economics"
+    if law_score > economics_score:
+        recommendation = "Law"
+
+    return render(request, 'results.html', {'scores': scores, 'recommendation': recommendation})
+#################################################################
+#############################################
 
 
 

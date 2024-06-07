@@ -1,0 +1,22 @@
+<!-- quiz/templates/quiz/results.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Results</title>
+    <style>
+        /* Add your CSS styling here */
+    </style>
+</head>
+<body>
+    <h1>Quiz Results</h1>
+    <p>Scores:</p>
+    <ul>
+        {% for category, score in scores.items %}
+        <li>{{ category }}: {{ score }}</li>
+        {% endfor %}
+    </ul>
+    <p>Based on your scores, we recommend a career in <strong>{{ recommendation }}</strong>.</p>
+</body>
+</html>

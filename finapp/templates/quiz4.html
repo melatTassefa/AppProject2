@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Page {{ page }}</title>
+</head>
+<body>
+    <h1>Quiz Page {{ page }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {% for question in questions %}
+            <div>
+                <label>{{ question.id }}. {{ question.text }}</label><br>
+                <input type="radio" name="question{{ question.id }}" value="1" required> 1<br>
+                <input type="radio" name="question{{ question.id }}" value="2" required> 2<br>
+                <input type="radio" name="question{{ question.id }}" value="3" required> 3<br>
+                <input type="radio" name="question{{ question.id }}" value="4" required> 4<br>
+                <input type="radio" name="question{{ question.id }}" value="5" required> 5<br>
+            </div>
+        {% endfor %}
+        <button type="submit">Next</button>
+    </form>
+</body>
+</html>

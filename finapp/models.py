@@ -84,6 +84,23 @@ class College_Fields(models.Model):
     def __str__(self):
         return self.Field_Name
 #####################################################
+
+# class student(models.Model):
+#     GENDER_CHOICES = (
+#         ('Male', Male),
+#         ('Female', Female),
+#     )
+#     student_Name = models.CharField(max_length=200)
+#     student_MiddleName = models.CharField(max_length=200)
+#     student_LastName = models.CharField(max_length=200)
+#     student_DoB = models.DateField()
+#     student_Gender = models.CharField(max_length=6, choices=GENDER_CHOICES)
+#     student_Subcity = models.CharField(max_length=250)
+#     student_City = models.CharField(max_length=250)
+#     student_Country = models.CharField(max_length=250)
+
+
+
 class CustomUser(AbstractUser):
    
     HIGHER_EDUCATION = 'highereducation'
@@ -108,3 +125,17 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.username
     
+
+# quiz/models.py
+
+from django.db import models
+
+class Question(models.Model):
+    text = models.CharField(max_length=255)
+    category = models.CharField(max_length=50)
+    rank = models.IntegerField()
+
+class Choice(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    text = models.CharField(max_length=50)
+    value = models.IntegerField()
