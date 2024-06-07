@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>College Search</title> -->
+  {% include "searchhead.html" %}
+  <!-- <link rel="stylesheet" href="{% static 'assets/css/searchcss.css' %}">
+</head> -->
+{% include "navbar.html" %}
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>College Search</h1>
+      <p>Application Requirements</p>
+    </header>
+    <div class="search-box">
+      <input type="text" id="search-input" placeholder="College or City Name">
+      <p>Separate multiple search terms with a comma, e.g.: Washington, Boston</p>
+    </div>
+    <div class="filters">
+      <a href="#">More filters</a>
+    </div>
+    <div class="results">
+      <p id="results-count">3 results</p>
+      <p>Sort by: College Name</p>
+    </div>
+    <div class="college-list" id="college-list">
+      {% for x in college_data %}
+      <div class="college">
+        <h2>{{x.college_Name}}</h2>
+        <p>{{x.college_Subcity}}, {{x.college_City}} - {{x.college_Country}}</p>
+        <p>{{x.college_Email}}</p>
+        <button>Add+</button>
+      </div>
+      {% endfor %}
+      <!-- <div class="college">
+        <h2>Abilene Christian University</h2>
+        <p>Abilene, TX - USA</p>
+        <button>Add+</button>
+      </div>
+      <div class="college">
+        <h2>Adelphi University</h2>
+        <p>Garden City, NY - USA</p>
+        <button>Add+</button>
+      </div> -->
+    </div>
+  </div>
+  <!-- <script src="script.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('search-input');
+      const collegeList = document.getElementById('college-list');
+      const resultsCount = document.getElementById('results-count');
+      const colleges = collegeList.getElementsByClassName('college');
+
+      searchInput.addEventListener('input', function() {
+        const filter = searchInput.value.toLowerCase();
+        let count = 0;
+
+        for (let i = 0; i < colleges.length; i++) {
+          const college = colleges[i];
+          const collegeName = college.getElementsByTagName('h2')[0].innerText.toLowerCase();
+          const collegeLocation = college.getElementsByTagName('p')[0].innerText.toLowerCase();
+
+          if (collegeName.includes(filter) || collegeLocation.includes(filter)) {
+            college.style.display = '';
+            count++;
+          } else {
+            college.style.display = 'none';
+          }
+        }
+
+        resultsCount.innerText = `${count} results`;
+      });
+    });
+  </script>
+</body>
+</html>

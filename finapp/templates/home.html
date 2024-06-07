@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+{% include "head.html" %}
+{% include "navbar.html" %}
+<body>
+    <main id="main">
+
+        <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
+            <div class="container" data-aos="fade-in">
+              <h1>{{home_data.maintitle}}</h1>
+              <h2>{{home_data.maintitle2}}</h2>
+              <div class="d-flex align-items-center">
+                <i class="bx bxs-right-arrow-alt get-started-icon"></i>
+                <a href="#about" class="btn-get-started scrollto">Get Started</a>
+              </div>
+            </div>
+          </section><!-- End Hero -->
+        
+          
+        
+            <!-- ======= Why Us Section ======= -->
+            <section id="why-us" class="why-us">
+              <div class="container">
+        
+                <div class="row">
+                  <div class="col-xl-4 col-lg-5" data-aos="fade-up">
+                    <div class="content">
+                      <h3>{{home_data.card1}}</h3>
+                      <p>
+                        {{home_data.description1}}
+                      </p>
+                      <div class="text-center">
+                        <a href="#" class="more-btn">Learn More <i class="bx bx-chevron-right"></i></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xl-8 col-lg-7 d-flex">
+                    <div class="icon-boxes d-flex flex-column justify-content-center">
+                      <div class="row">
+                        <div class="col-xl-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                          <div class="icon-box mt-4 mt-xl-0">
+                            <i class="bx bx-receipt"></i>
+                            <h4>{{home_data.card2}}</h4>
+                            <p>{{home_data.description2}}</p>
+                          </div>
+                        </div>
+                        <div class="col-xl-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+                          <div class="icon-box mt-4 mt-xl-0">
+                            <i class="bx bx-cube-alt"></i>
+                            <h4>{{home_data.card3}}</h4>
+                            <p>{{home_data.description3}}</p>
+                          </div>
+                        </div>
+                        <div class="col-xl-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
+                          <div class="icon-box mt-4 mt-xl-0">
+                            <i class="bx bx-images"></i>
+                            <h4>{{home_data.card4}}</h4>
+                            <p>{{home_data.description4}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        
+              </div>
+            </section><!-- End Why Us Section -->
+    </main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+{% include "footer.html" %}
+{% include "script.html" %}
+
+</body>
+
+</html>

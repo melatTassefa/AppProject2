@@ -1,227 +1,101 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
-{% include "head.html" %}
-{% include "navbar.html" %}
-
-<style>
-    @media (min-width: 1025px) {
-.h-custom {
-height: 100vh !important;
-}
-}
-.card-registration .select-input.form-control[readonly]:not([disabled]) {
-font-size: 1rem;
-line-height: 2.15;
-padding-left: .75em;
-padding-right: .75em;
-}
-.card-registration .select-arrow {
-top: 13px;
-}
-
-.gradient-custom-2 {
-/* fallback for old browsers */
-background: #a1c4fd;
-
-/* Chrome 10-25, Safari 5.1-6 */
-background: -webkit-linear-gradient(to right, rgba(161, 196, 253, 1), rgba(194, 233, 251, 1));
-
-/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-background: linear-gradient(to right, rgba(161, 196, 253, 1), rgba(194, 233, 251, 1))
-}
-
-.bg-indigo {
-background-color: #4835d4;
-}
-@media (min-width: 992px) {
-.card-registration-2 .bg-indigo {
-border-top-right-radius: 15px;
-border-bottom-right-radius: 15px;
-}
-}
-@media (max-width: 991px) {
-.card-registration-2 .bg-indigo {
-border-bottom-left-radius: 15px;
-border-bottom-right-radius: 15px;
-}
-}
-</style>
-
-
-
-<section class="h-100 h-custom gradient-custom-2">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12">
-          <div class="card card-registration card-registration-2" style="border-radius: 15px;">
-            <div class="card-body p-0">
-              <div class="row g-0">
-                <div class="col-lg-6">
-                  <div class="p-5">
-                    <h3 class="fw-normal mb-5" style="color: #4835d4;">General Infomation</h3>
-  
-                    <div class="mb-4 pb-2">
-                      <select data-mdb-select-init>
-                        <option value="1">Title</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                        <option value="4">Four</option>
-                      </select>
-                    </div>
-  
-                    <div class="row">
-                      <div class="col-md-6 mb-4 pb-2">
-  
-                        <div data-mdb-input-init class="form-outline">
-                          <input type="text" id="form3Examplev2" class="form-control form-control-lg" />
-                          <label class="form-label" for="form3Examplev2">First name</label>
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+</head>
+<body>                                    
+    <section class="bg-light p-3 p-md-4 p-xl-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-xxl-11">
+                    <div class="card border-light-subtle shadow-sm">
+                        <div class="row g-0">
+                            <div class="col-12 col-md-6">
+                                <img class="img-fluid rounded-start w-100 h-100 object-fit-cover" loading="lazy" src="{% static './assets/img/gr.jfif' %}" alt="Welcome back you've been missed!">
+                            </div>
+                            <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+                                <div class="col-12 col-lg-11 col-xl-10">
+                                    <div class="card-body p-3 p-md-4 p-xl-5">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="mb-5">
+                                                    <div class="text-center mb-4">
+                                                        <a href="#!">
+                                                            <img src="./assets/img/bsb-logo.svg" alt="BootstrapBrain Logo" width="175" height="57">
+                                                        </a>
+                                                    </div>
+                                                    <h4 class="text-center">Welcome back you've been missed!</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="row">
+                                            <div class="col-12">
+                                                <div class="d-flex gap-3 flex-column">
+                                                    <a href="#!" class="btn btn-lg btn-outline-dark">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
+                                                            <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
+                                                        </svg>
+                                                        <span class="ms-2 fs-6">Log in with Google</span>
+                                                    </a>
+                                                </div>
+                                                <p class="text-center mt-4 mb-5">Or sign in with</p>
+                                            </div>
+                                        </div> -->
+                                        
+                                       {% if messages %}
+                                                <ul class="messages">
+                                                    {% for message in messages %}
+                                                        <div class="alert alert-{{ message.tags }}">
+                                                            {{ message }}
+                                                        </div>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
+                                            <form  class="user" method="POST" action="">
+                                                {% csrf_token %}
+                                                
+                                                {{ form.username }}
+                                                {{ form.email }}
+                                                {{ form.first_name }}
+                                                {{ form.last_name }}
+                                                <select name="role" id="role" class="form-control mb-3">
+                                                    <option value="" style="color:grey" selected disabled>Choose your role</option>
+                                                    <option value="admin">Admin</option>
+                                                    <option value="highereducation">Higher Education</option>
+                                                    <option value="student">Student</option>
+                                                </select>
+                                                {{ form.password1 }}
+                                                {{ form.password2 }}
+                                                <a href="{% url 'login_url' %}"><button class="btn btn-dark btn-lg" type="submit" value="Register">Register now</button></a> 
+                                           
+                                            </form>
+                                            
+                                            {% if form.errors %}
+                                                <ul class="errorlist">
+                                                    {% for field in form %}
+                                                        {% for error in field.errors %}
+                                                            <li><strong>{{ field.label_tag }}:</strong> {{ error }}</li>
+                                                        {% endfor %}
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="d-flex gap-2 gap-md-12 flex-column flex-md-row justify-content-md-center mt-5">
+                                                        <a href="{% url 'login_url' %}" class="link-secondary text-decoration-none">Already have an account</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-  
-                      </div>
-                      <div class="col-md-6 mb-4 pb-2">
-  
-                        <div data-mdb-input-init class="form-outline">
-                          <input type="text" id="form3Examplev3" class="form-control form-control-lg" />
-                          <label class="form-label" for="form3Examplev3">Last name</label>
-                        </div>
-  
-                      </div>
                     </div>
-  
-                    <div class="mb-4 pb-2">
-                      <select data-mdb-select-init>
-                        <option value="1">Position</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                        <option value="4">Four</option>
-                      </select>
-                    </div>
-  
-                    <div class="mb-4 pb-2">
-                      <div data-mdb-input-init class="form-outline">
-                        <input type="text" id="form3Examplev4" class="form-control form-control-lg" />
-                        <label class="form-label" for="form3Examplev4">Position</label>
-                      </div>
-                    </div>
-  
-                    <div class="row">
-                      <div class="col-md-6 mb-4 pb-2 mb-md-0 pb-md-0">
-  
-                        <div data-mdb-input-init class="form-outline">
-                          <input type="text" id="form3Examplev5" class="form-control form-control-lg" />
-                          <label class="form-label" for="form3Examplev5">Bussines Arena</label>
-                        </div>
-  
-                      </div>
-                      <div class="col-md-6">
-  
-                        <select data-mdb-select-init>
-                          <option value="1">Employees</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
-                          <option value="4">Four</option>
-                        </select>
-  
-                      </div>
-                    </div>
-  
-                  </div>
                 </div>
-                <div class="col-lg-6 bg-indigo text-white">
-                  <div class="p-5">
-                    <h3 class="fw-normal mb-5">Contact Details</h3>
-  
-                    <div class="mb-4 pb-2">
-                      <div data-mdb-input-init class="form-outline form-white">
-                        <input type="text" id="form3Examplea2" class="form-control form-control-lg" />
-                        <label class="form-label" for="form3Examplea2">Street + Nr</label>
-                      </div>
-                    </div>
-  
-                    <div class="mb-4 pb-2">
-                      <div data-mdb-input-init class="form-outline form-white">
-                        <input type="text" id="form3Examplea3" class="form-control form-control-lg" />
-                        <label class="form-label" for="form3Examplea3">Additional Information</label>
-                      </div>
-                    </div>
-  
-                    <div class="row">
-                      <div class="col-md-5 mb-4 pb-2">
-  
-                        <div data-mdb-input-init class="form-outline form-white">
-                          <input type="text" id="form3Examplea4" class="form-control form-control-lg" />
-                          <label class="form-label" for="form3Examplea4">Zip Code</label>
-                        </div>
-  
-                      </div>
-                      <div class="col-md-7 mb-4 pb-2">
-  
-                        <div data-mdb-input-init class="form-outline form-white">
-                          <input type="text" id="form3Examplea5" class="form-control form-control-lg" />
-                          <label class="form-label" for="form3Examplea5">Place</label>
-                        </div>
-  
-                      </div>
-                    </div>
-  
-                    <div class="mb-4 pb-2">
-                      <div data-mdb-input-init class="form-outline form-white">
-                        <input type="text" id="form3Examplea6" class="form-control form-control-lg" />
-                        <label class="form-label" for="form3Examplea6">Country</label>
-                      </div>
-                    </div>
-  
-                    <div class="row">
-                      <div class="col-md-5 mb-4 pb-2">
-  
-                        <div data-mdb-input-init class="form-outline form-white">
-                          <input type="text" id="form3Examplea7" class="form-control form-control-lg" />
-                          <label class="form-label" for="form3Examplea7">Code +</label>
-                        </div>
-  
-                      </div>
-                      <div class="col-md-7 mb-4 pb-2">
-  
-                        <div data-mdb-input-init class="form-outline form-white">
-                          <input type="text" id="form3Examplea8" class="form-control form-control-lg" />
-                          <label class="form-label" for="form3Examplea8">Phone Number</label>
-                        </div>
-  
-                      </div>
-                    </div>
-  
-                    <div class="mb-4">
-                      <div data-mdb-input-init class="form-outline form-white">
-                        <input type="text" id="form3Examplea9" class="form-control form-control-lg" />
-                        <label class="form-label" for="form3Examplea9">Your Email</label>
-                      </div>
-                    </div>
-  
-                    <div class="form-check d-flex justify-content-start mb-4 pb-3">
-                      <input class="form-check-input me-3" type="checkbox" value="" id="form2Example3c" />
-                      <label class="form-check-label text-white" for="form2Example3">
-                        I do accept the <a href="#!" class="text-white"><u>Terms and Conditions</u></a> of your
-                        site.
-                      </label>
-                    </div>
-  
-                    <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-light btn-lg"
-                      data-mdb-ripple-color="dark">Register</button>
-  
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  {% include "footer.html" %}
-  {% include "script.html" %}
-
+    </section>
 </body>
-
 </html>
